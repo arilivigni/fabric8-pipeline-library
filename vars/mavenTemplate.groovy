@@ -33,7 +33,7 @@ def call(Map parameters = [:], body) {
                         containerTemplate(
                                 name: 'maven',
                                 image: "${mavenImage}",
-                                command: '/bin/bash -c',
+                                command: '/bin/sh -c',
                                 args: 'cat',
                                 ttyEnabled: true,
                                 workingDir: '/home/jenkins/',

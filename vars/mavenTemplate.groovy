@@ -10,7 +10,7 @@ def call(Map parameters = [:], body) {
     def label = parameters.get('label', defaultLabel)
 
     def mavenImage = parameters.get('mavenImage', 'openshift/jenkins-slave-maven-centos7')
-    def jnlpImage = (flow.isOpenShift()) ? 'openshift/jenkins-slave-base-centos7:v3.11' : 'jenkinsci/jnlp-slave:2.62'
+    def jnlpImage = (flow.isOpenShift()) ? 'fabric8/jenkins-slave-base-centos7:vb0268ae' : 'jenkinsci/jnlp-slave:2.62'
     def inheritFrom = parameters.get('inheritFrom', 'base')
 
 

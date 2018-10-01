@@ -34,7 +34,7 @@ def call(Map parameters = [:], body) {
                         containerTemplate(
                                 name: 'maven',
                                 image: "${mavenImage}",
-                                command: '/bin/sh -c',
+                                command: '/bin/bash -c',
                                 args: 'cat',
                                 ttyEnabled: true,
                                 workingDir: '/home/jenkins/',
@@ -57,7 +57,8 @@ def call(Map parameters = [:], body) {
     } else {
         echo "building using the docker socket"
 
-        def mavenOpts = parameters.get('mavenOpts', '-Duser.home=/root/ -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
+        //def mavenOpts = parameters.get('mavenOpts', '-Duser.home=/root/ -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
+        def mavenOpts = parameters.get('mavenOpts', '-Duser.home=~/ -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
         podTemplate(cloud: cloud,
                 label: label,
@@ -67,7 +68,7 @@ def call(Map parameters = [:], body) {
                                 //[name: 'jnlp', image: "${jnlpImage}", args: '${computer.jnlpmac} ${computer.name}'],
                                 name: 'maven',
                                 image: "${mavenImage}",
-                                command: '/bin/sh -c',
+                                command: '/bin/bash -c',
                                 args: 'cat',
                                 ttyEnabled: true,
                                 alwaysPullImage: false,

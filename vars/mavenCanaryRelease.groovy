@@ -21,8 +21,15 @@ def call(body) {
     def utils = new io.fabric8.Utils()
     def autoUpdateFMP = config.autoUpdateFabric8Plugin ?: true
     def skipTests = config.skipTests ?: false
+    env.gitUser = config.gitUser
+    env.gitEmail = config.gitEmail
 
-    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
+    sh '''
+        git config --global user.name ${gitUser}
+        git config --global user.email ${gitEmail}
+        git checkout -b ${env.JOB_NAME}-${config.version}
+    '''
+    //sh "git checkout -b ${env.JOB_NAME}-${config.version}"
 
     if (autoUpdateFMP) {
         try {

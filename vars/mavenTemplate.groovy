@@ -19,7 +19,6 @@ def call(Map parameters = [:], body) {
 
     def cloud = flow.getCloudConfig()
 
-    //def javaOptions = parameters.get('javaOptions', '-Duser.home=/root/ -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m -Xmx192m')
     def javaOptions = parameters.get('javaOptions', '-Duser.home=/home/jenkins -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m -Xmx192m')
 
     if (utils.isUseOpenShiftS2IForBuilds()) {
@@ -46,7 +45,6 @@ def call(Map parameters = [:], body) {
                                 ],
                                 resourceLimitMemory: '640Mi')],
                 volumes: [
-                        //secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/root/.m2'),
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
                         secretVolume(secretName: 'jenkins-release-gpg', mountPath: '/home/jenkins/.gnupg-ro'),
                         secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken'),
@@ -59,8 +57,6 @@ def call(Map parameters = [:], body) {
         }
     } else {
         echo "building using the docker socket"
-
-        //def mavenOpts = parameters.get('mavenOpts', '-Duser.home=/root/ -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
         def mavenOpts = parameters.get('mavenOpts', '-Duser.home=/home/jenkins -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
 
         podTemplate(cloud: cloud,
@@ -83,7 +79,6 @@ def call(Map parameters = [:], body) {
                                         envVar(key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/')])],
                 volumes: [
                         secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/home/jenkins/.m2'),
-                        //secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/root/.m2'),
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
                         secretVolume(secretName: 'jenkins-release-gpg', mountPath: '/home/jenkins/.gnupg-ro'),
                         secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken'),

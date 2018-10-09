@@ -25,9 +25,9 @@ def call(body) {
     env.gitEmail = config.gitEmail
 
     sh '''
-        git config --global user.name ${gitUser}
-        git config --global user.email ${gitEmail}
-        git checkout -b ${env.JOB_NAME}-${config.version}
+       git config --global user.email fabric8-admin@googlegroups.com
+       git config --global user.name fabric8-release
+       git checkout -b ${env.JOB_NAME}-${config.version}
     '''
     //sh "git checkout -b ${env.JOB_NAME}-${config.version}"
 

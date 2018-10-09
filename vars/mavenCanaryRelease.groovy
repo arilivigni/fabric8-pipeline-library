@@ -24,7 +24,11 @@ def call(body) {
     env.gitUser = config.gitUser
     env.gitEmail = config.gitEmail
 
-    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
+    sh """
+        git config user.email fabric8-admin@googlegroups.com
+        git config user.name fabric8-release 
+        git checkout -b ${env.JOB_NAME}-${config.version}
+    """
 
     if (autoUpdateFMP) {
         try {

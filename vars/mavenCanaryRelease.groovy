@@ -21,8 +21,6 @@ def call(body) {
     def utils = new io.fabric8.Utils()
     def autoUpdateFMP = config.autoUpdateFabric8Plugin ?: true
     def skipTests = config.skipTests ?: false
-    env.gitUser = config.gitUser
-    env.gitEmail = config.gitEmail
 
     sh """
         git config user.email fabric8-admin@googlegroups.com

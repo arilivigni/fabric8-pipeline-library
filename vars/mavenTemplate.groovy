@@ -16,6 +16,9 @@ def call(Map parameters = [:], body) {
 
     def cloud = flow.getCloudConfig()
 
+    /*
+        /home/jenkins is used to support the upstream maven image and this is not stored in env.JENKINS_HOME=/var/lib/jenkins
+     */
     def javaOptions = parameters.get('javaOptions', '-Duser.home=/home/jenkins -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dsun.zip.disableMemoryMapping=true -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Xms10m -Xmx192m')
 
     if (utils.isUseOpenShiftS2IForBuilds()) {

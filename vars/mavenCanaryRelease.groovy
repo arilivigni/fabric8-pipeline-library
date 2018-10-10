@@ -37,7 +37,7 @@ def call(body) {
     }
     sh """
         #!/bin/bash 
-        mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}"
+        mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}
     """
 
     def buildName = ""

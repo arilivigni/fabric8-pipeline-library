@@ -15,7 +15,7 @@ def call(body) {
         token = env.PASS
     }
 
-    container(name: 'maven') {
+    container(name: 'maven', shell:'/bin/bash') {
 
         if (!flow.isAuthorCollaborator(token, "")) {
             error 'Change author is not a collaborator on the project, failing build until we support the [test] comment'

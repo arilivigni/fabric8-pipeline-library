@@ -67,7 +67,8 @@ def call(body) {
 
     profile = config.profile ?: "openshift"
     goal = config.goal ?: "install"
-    cmd = config.cmd ?: "mvn clean -B -e -U ${goal} -Dmaven.test.skip=${skipTests} ${spaceLabelArg} -P ${profile}"
+    cmd = config.cmd ?: "#!/bin/bash \n" +
+            "mvn clean -B -e -U ${goal} -Dmaven.test.skip=${skipTests} ${spaceLabelArg} -P ${profile}"
     sh cmd
 
 

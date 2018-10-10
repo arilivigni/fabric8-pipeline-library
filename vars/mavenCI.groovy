@@ -29,7 +29,8 @@ def call(body) {
         def goal = config.goal ?: "install"
         def profile = config.profile ?: "openshift"
         def skipTests = config.skipTests ?: false
-        def buildCmd = config.buildCmd ?: "mvn clean -B -e -U ${goal} -Dmaven.test.skip=${skipTests} -P ${profile}"
+        def buildCmd = config.buildCmd ?: "#!/bin/bash \n" +
+                        "mvn clean -B -e -U ${goal} -Dmaven.test.skip=${skipTests} -P ${profile}"
 
         def version = 'PR-' + getNewVersion {} + "-${env.BUILD_NUMBER}"
 

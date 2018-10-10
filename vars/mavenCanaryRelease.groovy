@@ -22,11 +22,10 @@ def call(body) {
     def autoUpdateFMP = config.autoUpdateFabric8Plugin ?: true
     def skipTests = config.skipTests ?: false
 
-    sh """
-        git config user.email fabric8-admin@googlegroups.com
-        git config user.name fabric8-release 
-        git checkout -b ${env.JOB_NAME}-${config.version}
-    """
+    sh "#!/bin/bash \n" +
+            "git config user.email fabric8-admin@googlegroups.com \n"
+        "git config user.name fabric8-release \n"
+        "git checkout -b ${env.JOB_NAME}-${config.version}"
 
     if (autoUpdateFMP) {
         try {
@@ -35,12 +34,8 @@ def call(body) {
             println "FMP patching failed due to ${err.message}"
         }
     }
-    sh """
-        #!/bin/bash
-        mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}
-    """
-//     sh "#!/bin/bash \n" +
-//        "mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}"
+    sh "#!/bin/bash \n" +
+            "mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}"
 
     def buildName = ""
     try {

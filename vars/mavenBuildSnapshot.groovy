@@ -15,10 +15,8 @@ def call(body) {
         // update any versions that we want to override
         overwriteDeps(config.pomVersionToUpdate)
 
-        sh """"
-            #!/bin/bash
-            mvn clean -e -U install -Dm2.repo=.mvnrepository -Duser.home=/root/ -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
-        """
+        sh "#!/bin/bash \n" +
+                "mvn clean -e -U install -Dm2.repo=.mvnrepository -Duser.home=/root/ -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
 
         def m = readMavenPom file: 'pom.xml'
         version = m.version

@@ -35,7 +35,10 @@ def call(body) {
 
         stage('Build + Unit test') {
             // set a unique temp version so we can download artifacts from nexus and run acceptance tests
-            sh "mvn -U versions:set -DnewVersion=${version}"
+            sh """
+                #!/bin/bash
+                mvn -U versions:set -DnewVersion=${version}
+            """
             sh buildCmd
         }
 
@@ -55,7 +58,10 @@ def call(body) {
 
                 } else {
                     retry(3) {
-                        sh "mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
+                        sh """
+                            #!/bin/bash
+                            mvn fabric8:push -Ddocker.push.registry=${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}"
+                        """
                     }
                 }
             }

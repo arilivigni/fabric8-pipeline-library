@@ -10,7 +10,7 @@ def call(body) {
     body()
 
     def version
-    container(name: 'maven') {
+    container(name: 'maven', shell:'/bin/bash') {
 
         // update any versions that we want to override
         overwriteDeps(config.pomVersionToUpdate)

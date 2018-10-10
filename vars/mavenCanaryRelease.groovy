@@ -35,7 +35,10 @@ def call(body) {
             println "FMP patching failed due to ${err.message}"
         }
     }
-    sh "mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}"
+    sh """
+        #!/bin/bash 
+        mvn org.codehaus.mojo:versions-maven-plugin:2.5:set -U -DnewVersion=${config.version}"
+    """
 
     def buildName = ""
     try {
